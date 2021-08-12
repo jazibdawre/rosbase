@@ -3,3 +3,6 @@ devel
 install
 logs
 __pycache__
+
+raspicam_node
+rosserial
