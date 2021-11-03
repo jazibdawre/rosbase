@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Start ROS Serial -->
+    <node pkg="rosserial_python" type="serial_node.py" name="serial_node" output="log" respawn="false" respawn_delay="0">
+        <param name="port" type="string"  value="/dev/ttyAMA0"/>
+        <param name="baud" type="int"     value="57600"/>
+    </node>
+
+    <!-- Start Raspicam Node -->
+    <include file="$(find raspicam_node)/launch/camerav1_1280x720.launch">
+        <param name="enable_raw" type="string"  value="true"/>
+    </include>
+
+    <!-- Start ROS Board -->
+    <node pkg="rosboard" type="rosboard_node" name="rosboard_node" output="log" respawn="true" respawn_delay="10"/>
+</launch>
