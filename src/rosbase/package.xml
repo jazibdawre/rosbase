@@ -20,6 +20,7 @@
   <build_export_depend>std_msgs</build_export_depend>
 
   <exec_depend>raspicam_node</exec_depend>
+  <exec_depend>rosboard</exec_depend>
   <exec_depend>rosserial_arduino</exec_depend>
   <exec_depend>rosserial_client</exec_depend>
   <exec_depend>std_msgs</exec_depend>
