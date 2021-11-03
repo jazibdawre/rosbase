@@ -8,7 +8,8 @@
 
     <!-- Start Raspicam Node -->
     <include file="$(find raspicam_node)/launch/camerav1_1280x720.launch">
-        <param name="enable_raw" type="string"  value="true"/>
+        <arg name="enable_raw" value="true"/>
+        <arg name="output" value="log"/>
     </include>
 
     <!-- Start ROS Board -->
