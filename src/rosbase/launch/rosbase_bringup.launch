@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <launch>
+    <!-- Replacement startup file if not using services -->
     <!-- Start ROS Serial -->
     <node pkg="rosserial_python" type="serial_node.py" name="rosserial_node" output="log" respawn="false" respawn_delay="0">
         <param name="port" type="string"  value="/dev/ttyAMA0"/>
