@@ -9,6 +9,10 @@ const int max_angular_vel = 1;
 const float linear_coeff = 255 / max_linear_vel;
 const float angular_coeff = 255 / max_angular_vel;
 
+// Main Control
+int pwm_linear = 0;
+int pwm_angular = 0;
+
 // ROS
 void set_velocity(const geometry_msgs::Twist& vel_msg);
 
@@ -85,8 +89,8 @@ void set_motor_pwm(int pwm_linear, int pwm_angular) {
 }
 
 void set_velocity(const geometry_msgs::Twist& vel_msg) {
-    int pwm_linear = int(vel_msg.linear.x * linear_coeff);
-    int pwm_angular = int(vel_msg.angular.z * angular_coeff);
+    extern int pwm_linear = int(vel_msg.linear.x * linear_coeff);
+    extern int pwm_angular = int(vel_msg.angular.z * angular_coeff);
 
     if (pwm_linear == 0 && pwm_angular == 0) {
         set_motor_pwm(0, 0);  // Stop
@@ -96,8 +100,6 @@ void set_velocity(const geometry_msgs::Twist& vel_msg) {
     float scaling_factor = max(float(abs(pwm_linear) + abs(pwm_angular)) / 255, 1.0);
     pwm_linear = round(float(pwm_linear) / scaling_factor);
     pwm_angular = round(float(pwm_angular) / scaling_factor);
-
-    set_motor_pwm(pwm_linear, pwm_angular);
 }
 
 void read_rf() {
@@ -127,6 +129,10 @@ void loop() {
     read_rf();
     rf_publisher.publish(&rf_msg);
 
+    ::pwm_linear = 0;
+    ::pwm_angular = 0;
     nh.spinOnce();
+
+    set_motor_pwm(::pwm_linear, ::pwm_angular);
     pwm_publisher.publish(&pwm_msg);
 }
