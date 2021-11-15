@@ -89,8 +89,8 @@ void set_motor_pwm(int pwm_linear, int pwm_angular) {
 }
 
 void set_velocity(const geometry_msgs::Twist& vel_msg) {
-    extern int pwm_linear = int(vel_msg.linear.x * linear_coeff);
-    extern int pwm_angular = int(vel_msg.angular.z * angular_coeff);
+    ::pwm_linear = int(vel_msg.linear.x * linear_coeff);
+    ::pwm_angular = int(vel_msg.angular.z * angular_coeff);
 
     if (pwm_linear == 0 && pwm_angular == 0) {
         set_motor_pwm(0, 0);  // Stop
@@ -98,8 +98,8 @@ void set_velocity(const geometry_msgs::Twist& vel_msg) {
     }
 
     float scaling_factor = max(float(abs(pwm_linear) + abs(pwm_angular)) / 255, 1.0);
-    pwm_linear = round(float(pwm_linear) / scaling_factor);
-    pwm_angular = round(float(pwm_angular) / scaling_factor);
+    ::pwm_linear = round(float(pwm_linear) / scaling_factor);
+    ::pwm_angular = round(float(pwm_angular) / scaling_factor);
 }
 
 void read_rf() {
